@@ -1,45 +1,44 @@
 {
-    "name": "tayfunerbilen/basicdb",
+    "name": "barisyeman/basicdb",
     "type": "library",
-    "description": "A BasicDB implementation using PDO. Select, Insert, Update and Delete operations in an OOP way.",
-    "keywords": ["db","pdo","oop"],
-    "homepage": "http://github.com/tayfunerbilen/BasicDB",
+    "description": "Lightweight, secure PDO query builder. A modernized fork of tayfunerbilen/basicdb with prepared-statement identifier whitelisting, PHP 8.1+ typing and transaction helpers.",
+    "keywords": ["db", "pdo", "oop", "query-builder", "orm", "mysql"],
+    "homepage": "https://github.com/barisyeman/basicdb",
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Tayfun Erbilen",
             "email": "tayfunerbilen@gmail.com",
             "homepage": "http://www.erbilen.net",
-            "role": "Developer"
+            "role": "Original author"
         },
         {
             "name": "Midori Kocak",
             "email": "mtkocak@gmail.com",
             "homepage": "http://www.mtkocak.com",
-            "role": "Developer"
+            "role": "Original author"
+        },
+        {
+            "name": "Barış Yeman",
+            "homepage": "https://github.com/barisyeman",
+            "role": "Maintainer (2026 modernization)"
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=8.1",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "2.*",
-        "phpmd/phpmd": "2.1.*",
-        "sebastian/phpcpd": "2.0.*",
-        "pdepend/pdepend": "2.0.*",
-        "phploc/phploc": "2.0.*",
-        "phpunit/phpunit": "4.7.*",
-        "theseer/phpdox": "0.7.*",
-        "phpunit/dbunit": "^1.4"
+        "phpunit/phpunit": "^10.0"
     },
     "config": {
-        "bin-dir": "bin/",
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": {
-            "Erbilen\\Database\\": "src"
+            "BarisYeman\\BasicDB\\": "src/"
         }
     }
 }

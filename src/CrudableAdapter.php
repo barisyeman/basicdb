@@ -1,54 +1,34 @@
 <?php
-namespace Erbilen\Database;
+
+declare(strict_types=1);
+
+namespace BarisYeman\BasicDB;
 
 abstract class CrudableAdapter implements CrudableInterface
 {
-    private $basicDB;
-    
-    public function __construct(BasicDB $connection){
-        $this->basicDB = $connection;
+    public function __construct(protected BasicDB $basicDB)
+    {
     }
 
-    public function create($data,$tableName){
-        
-        $query = $this->basicDB->insert($tableName)->set($data);
-        
+    public function create(array $data, string $tableName): int
+    {
+        $this->basicDB->insert($tableName)->set($data);
         return $this->basicDB->lastId();
-        
     }
 
-    public function read($id, $tableName){
-        $query = $this->basicDB->select($tableName)
-        ->where('id', $id)
-        ->run();
-        
-        if ($query) {
-            foreach ($query as $row) {
-                return ($row);
-            }
-        }
-        
+    public function read(int|string $id, string $tableName, string $pk = 'id'): mixed
+    {
+        return $this->basicDB->from($tableName)->where($pk, $id)->first();
     }
 
-    public function update($id, $tableName ,$data){
-        // update
-        $query = $this->basicDB->update($tableName)
-        ->where('id', $id)
-        ->set($data);
-        
-        if ($query) {
-            return true;
-        }
+    public function update(int|string $id, string $tableName, array $data, string $pk = 'id'): bool
+    {
+        return $this->basicDB->update($tableName)->where($pk, $id)->set($data);
     }
 
-    public function delete($id,$tableName){
-        // delete
-        $query = $this->basicDB->delete($tableName)
-        ->where('id', $id)
-        ->done();
-        
-        if ($query) {
-            return true;
-        }
+    public function delete(int|string $id, string $tableName, string $pk = 'id'): bool
+    {
+        $result = $this->basicDB->delete($tableName)->where($pk, $id)->done();
+        return $result !== false;
     }
 }

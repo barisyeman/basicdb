@@ -1,16 +1,18 @@
 <?php
-namespace Erbilen\Database;
+
+declare(strict_types=1);
+
+namespace BarisYeman\BasicDB;
 
 interface AddEditDeleteUpdateIndexViewInterface
 {
+    public function add(array $data): int;
 
-    public function add($data);
+    public function edit(int|string $id, array $data): bool;
 
-    public function edit($id, $data);
+    public function index(): iterable;
 
-    public function index();
+    public function view(int|string $id): mixed;
 
-    public function view($id);
-
-    public function delete($id);
+    public function delete(int|string $id): bool;
 }

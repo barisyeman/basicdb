@@ -1,3 +1,65 @@
+# BasicDB — 2026 Modernized Fork
+
+> **Credits**: This project was originally created by **[Tayfun Erbilen](http://www.erbilen.net/)** and **[Midori Koçak](http://www.mtkocak.com/)**. All credit for the original design, API and adapter pattern goes to them — this fork exists only to modernize and harden the library while preserving their work and approach intact. The original README, credits and history below are kept untouched out of respect for the authors.
+
+## About this fork (maintained by [Barış Yeman](https://github.com/barisyeman))
+
+**Goal:** Keep BasicDB a **lightweight, single-file-style ORM/query builder** — *no* heavy Eloquent-like abstractions, *no* migrations, *no* relations. Just a safe, modern PDO helper that is small enough to read in one sitting.
+
+**Approach:** Preserve the original public API and philosophy. Refactor internals so the library is safe to use in production on modern PHP.
+
+### What changed in the 2026 modernization
+
+- **PHP 8.1+**, `declare(strict_types=1)`, typed properties, union types, `match`, `readonly`-friendly.
+- **PSR-4 namespace** `BarisYeman\BasicDB` — fully namespaced, autoloaded via Composer.
+- **Full prepared statements** everywhere — `LIKE`, `IN`, `BETWEEN`, `FIND_IN_SET`, `SOUNDEX` and `SET` clauses all bind values; no string concatenation of user input.
+- **Identifier whitelist** — table and column names are validated against the live schema at connect time (cached, configurable). Invalid identifiers throw a `ValidationException` instead of reaching the database.
+- **Error modes** — `throw` (default, throws `QueryException`), `silent` (logs), `debug` (HTML). No more forced HTML output that breaks JSON APIs.
+- **Transactions** — `$db->transaction(fn($db) => …)` helper with automatic rollback on any `Throwable`.
+- **New helpers** — `whereNull`, `whereNotNull`, `whereRaw`, `find($id)`, `count()`, typed `pagination()` (no more implicit `$_GET` coupling).
+- **Bug fixes** — safer `set()` operator detection (`+5`/`-3` only), reset of builder state after execute, `truncate()`/`truncateAll()` fixed, JOIN accepts structured args (`join($table, $a, '=', $b)`), `utf8mb4` by default.
+- **Security** — `__call` now throws `BadMethodCallException` instead of `die()`, schema cache file is chmod `0600`, raw SQL in `whereRaw` blocks dangerous keywords.
+
+### Quick start
+
+```php
+require 'vendor/autoload.php';
+
+use BarisYeman\BasicDB\BasicDB;
+
+$db = new BasicDB('localhost', 'mydb', 'user', 'pass');
+
+// SELECT
+$posts = $db->from('posts')
+            ->where('status', 'published')
+            ->orderBy('created_at', 'DESC')
+            ->limit(0, 20)
+            ->all();
+
+// INSERT
+$db->insert('users')->set(['name' => 'Barış', 'email' => 'x@y.com']);
+$id = $db->lastId();
+
+// UPDATE with self-increment
+$db->update('products')->where('id', 5)->set(['stock' => '-1']);
+
+// Transaction
+$db->transaction(function (BasicDB $db) {
+    $db->insert('orders')->set(['user_id' => 1, 'total' => 99.90]);
+    $db->update('stock')->where('sku', 'ABC')->set(['qty' => '-1']);
+});
+```
+
+### Requirements
+
+- PHP **8.1** or newer
+- `ext-pdo`, `ext-pdo_mysql`
+- MySQL / MariaDB (other drivers are not targeted — the library stays MySQL-focused on purpose)
+
+---
+
+# Original README (preserved)
+
 # BasicDB Class for PHP
 
 **Description**: BasicDB is a class to teach and use PDO and OOP, using abstract classes, interfaces and adapters. It simplifies also PDO usage.
