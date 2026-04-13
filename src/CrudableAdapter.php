@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BarisYeman\BasicDB;
+namespace Erbilen\Database;
 
 abstract class CrudableAdapter implements CrudableInterface
 {

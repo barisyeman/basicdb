@@ -11,7 +11,7 @@
 ### What changed in the 2026 modernization
 
 - **PHP 8.1+**, `declare(strict_types=1)`, typed properties, union types, `match`, `readonly`-friendly.
-- **PSR-4 namespace** `BarisYeman\BasicDB` — fully namespaced, autoloaded via Composer.
+- **PSR-4 namespace** `Erbilen\Database` — fully namespaced, autoloaded via Composer.
 - **Full prepared statements** everywhere — `LIKE`, `IN`, `BETWEEN`, `FIND_IN_SET`, `SOUNDEX` and `SET` clauses all bind values; no string concatenation of user input.
 - **Identifier whitelist** — table and column names are validated against the live schema at connect time (cached, configurable). Invalid identifiers throw a `ValidationException` instead of reaching the database.
 - **Error modes** — `throw` (default, throws `QueryException`), `silent` (logs), `debug` (HTML). No more forced HTML output that breaks JSON APIs.
@@ -25,9 +25,10 @@
 ```php
 require 'vendor/autoload.php';
 
-use BarisYeman\BasicDB\BasicDB;
+use Erbilen\Database\BasicDB;
 
 $db = new BasicDB('localhost', 'mydb', 'user', 'pass');
+// or: $db = new Erbilen\Database\BasicDB('localhost', 'mydb', 'user', 'pass');
 
 // SELECT
 $posts = $db->from('posts')

@@ -1,5 +1,5 @@
 {
-    "name": "barisyeman/basicdb",
+    "name": "tayfunerbilen/basicdb",
     "type": "library",
     "description": "Lightweight, secure PDO query builder. A modernized fork of tayfunerbilen/basicdb with prepared-statement identifier whitelisting, PHP 8.1+ typing and transaction helpers.",
     "keywords": ["db", "pdo", "oop", "query-builder", "orm", "mysql"],
@@ -38,7 +38,7 @@
     },
     "autoload": {
         "psr-4": {
-            "BarisYeman\\BasicDB\\": "src/"
+            "Erbilen\\Database\\": "src/"
         }
     }
 }

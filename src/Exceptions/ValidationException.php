@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BarisYeman\BasicDB\Exceptions;
+namespace Erbilen\Database\Exceptions;
 
 use InvalidArgumentException;
 

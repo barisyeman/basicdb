@@ -15,15 +15,15 @@ declare(strict_types=1);
  *   @maintainer Barış Yeman
  *   @update     2026
  *   - PHP 8.1+, strict types, typed properties
- *   - PSR-4 namespace: BarisYeman\BasicDB
+ *   - PSR-4 namespace: Erbilen\Database
  *   - Full prepared statements with identifier whitelist
  *   - Transaction helper, safer error modes, modern API
  */
 
-namespace BarisYeman\BasicDB;
+namespace Erbilen\Database;
 
-use BarisYeman\BasicDB\Exceptions\QueryException;
-use BarisYeman\BasicDB\Exceptions\ValidationException;
+use Erbilen\Database\Exceptions\QueryException;
+use Erbilen\Database\Exceptions\ValidationException;
 use Closure;
 use PDO;
 use PDOException;
